@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.clps.oas.sm.dao.PositionMapper">
+	<resultMap id="BaseResultMap" type="com.clps.oas.sm.pojo.Position">
+		<id column="position_id" jdbcType="INTEGER" property="positionId" />
+		<result column="position_name" jdbcType="VARCHAR" property="positionName" />
+		<result column="position_description" jdbcType="VARCHAR"
+			property="positionDescription" />
+		<result column="position_level" jdbcType="VARCHAR" property="positionLevel" />
+		<result column="position_department_id" jdbcType="INTEGER"
+			property="positionDepartmentId" />
+		<result column="position_created_datetime" jdbcType="TIMESTAMP"
+			property="positionCreatedDatetime" />
+		<result column="position_created_name" jdbcType="INTEGER"
+			property="positionCreatedName" />
+		<result column="position_updated_datetime" jdbcType="TIMESTAMP"
+			property="positionUpdatedDatetime" />
+		<result column="position_updated_name" jdbcType="INTEGER"
+			property="positionUpdatedName" />
+		<result column="position_default1" jdbcType="VARCHAR" property="positionDefault1" />
+		<result column="position_default2" jdbcType="VARCHAR" property="positionDefault2" />
+		<result column="position_isvalued" jdbcType="INTEGER" property="positionIsvalued" />
+	</resultMap>
+	<resultMap id="DepartmentMap" type="com.clps.oas.sm.pojo.Department">
+		<id column="DEPA_NUMBER" jdbcType="INTEGER" property="depaNumber" />
+		<result column="DEPA_NAME" jdbcType="VARCHAR" property="depaName" />
+		<result column="DEPA_FATHER_NUMBER" jdbcType="VARCHAR"
+			property="depaFatherNumber" />
+		<result column="DEPA_CHILD_NUMBER" jdbcType="VARCHAR" property="depaChildNumber" />
+		<result column="DEPA_LEVEL" jdbcType="VARCHAR" property="depaLevel" />
+		<result column="DEPA_EMAIL" jdbcType="VARCHAR" property="depaEmail" />
+		<result column="DEPA_COMMENT" jdbcType="VARCHAR" property="depaComment" />
+		<result column="DEPA_CREATE_NAME" jdbcType="VARCHAR" property="depaCreateName" />
+		<result column="DEPA_CREATE_DATETIME" jdbcType="TIMESTAMP"
+			property="depaCreateDatetime" />
+		<result column="DEPA_UPDATED_NAME" jdbcType="VARCHAR" property="depaUpdatedName" />
+		<result column="DEPA_UPDATED_DATETIME" jdbcType="TIMESTAMP"
+			property="depaUpdatedDatetime" />
+	</resultMap>
+	<resultMap id="DepartmentwithPositionMap" type="com.clps.oas.sm.pojo.Position">
+		<id column="position_id" jdbcType="INTEGER" property="positionId" />
+		<result column="position_name" jdbcType="VARCHAR" property="positionName" />
+		<result column="position_description" jdbcType="VARCHAR"
+			property="positionDescription" />
+		<result column="position_level" jdbcType="VARCHAR" property="positionLevel" />
+		<result column="position_department_id" jdbcType="INTEGER"
+			property="positionDepartmentId" />
+		<result column="position_created_datetime" jdbcType="TIMESTAMP"
+			property="positionCreatedDatetime" />
+		<result column="position_created_name" jdbcType="INTEGER"
+			property="positionCreatedName" />
+		<result column="position_updated_datetime" jdbcType="TIMESTAMP"
+			property="positionUpdatedDatetime" />
+		<result column="position_updated_name" jdbcType="INTEGER"
+			property="positionUpdatedName" />
+		<result column="position_default1" jdbcType="VARCHAR" property="positionDefault1" />
+		<result column="position_default2" jdbcType="VARCHAR" property="positionDefault2" />
+		<result column="position_isvalued" jdbcType="INTEGER" property="positionIsvalued" />
+		<!-- 一对一的使用标签 -->
+		<association property="department" resultMap="DepartmentMap" />
+	</resultMap>
+	<resultMap id="AccountResultMap" type="com.clps.oas.sm.pojo.Account">
+		<id column="account_id" jdbcType="INTEGER" property="accountId" />
+		<result column="account_name" jdbcType="VARCHAR" property="accountName" />
+		<result column="account_real_name" jdbcType="VARCHAR" property="accountRealName" />
+		<result column="account_pass" jdbcType="VARCHAR" property="accountPass" />
+		<result column="account_mail" jdbcType="VARCHAR" property="accountMail" />
+		<result column="account_province" jdbcType="VARCHAR" property="accountProvince" />
+		<result column="account_city" jdbcType="VARCHAR" property="accountCity" />
+		<result column="account_district" jdbcType="VARCHAR" property="accountDistrict" />
+		<result column="account_address" jdbcType="VARCHAR" property="accountAddress" />
+		<result column="account_phone" jdbcType="VARCHAR" property="accountPhone" />
+		<result column="account_telephone" jdbcType="VARCHAR" property="accountTelephone" />
+		<result column="account_role_id" jdbcType="INTEGER" property="accountRoleId" />
+		<result column="account_position_id" jdbcType="INTEGER"
+			property="accountPositionId" />
+		<result column="account_company_id" jdbcType="INTEGER"
+			property="accountCompanyId" />
+		<result column="account_created_datetime" jdbcType="TIMESTAMP"
+			property="accountCreatedDatetime" />
+		<result column="account_updated_datetime" jdbcType="TIMESTAMP"
+			property="accountUpdatedDatetime" />
+		<result column="account_isValid" jdbcType="BIT" property="accountIsvalid" />
+	</resultMap>
+	
+	
+	<!-- 结果映射 -->  
+<resultMap type="com.clps.oas.sm.pojo.Position" id="PositionWithDeptWithAccountMap" autoMapping="true">  
+<!--column指向数据库列名   property指向pojo对象中字段名-->  
+    <id column="position_id" jdbcType="INTEGER" property="positionId" />
+		<result column="position_name" jdbcType="VARCHAR" property="positionName" />
+		<result column="position_description" jdbcType="VARCHAR"
+			property="positionDescription" />
+		<result column="position_level" jdbcType="VARCHAR" property="positionLevel" />
+		<result column="position_department_id" jdbcType="INTEGER"
+			property="positionDepartmentId" />
+		<result column="position_created_datetime" jdbcType="TIMESTAMP"
+			property="positionCreatedDatetime" />
+		<result column="position_created_name" jdbcType="INTEGER"
+			property="positionCreatedName" />
+		<result column="position_updated_datetime" jdbcType="TIMESTAMP"
+			property="positionUpdatedDatetime" />
+		<result column="position_updated_name" jdbcType="INTEGER"
+			property="positionUpdatedName" />
+		<result column="position_default1" jdbcType="VARCHAR" property="positionDefault1" />
+		<result column="position_default2" jdbcType="VARCHAR" property="positionDefault2" />
+		<result column="position_isvalued" jdbcType="INTEGER" property="positionIsvalued" />
+    <!-- property指的是在bean中字段名 ofType类的全定向名 -->  
+    <collection property="department" ofType="com.clps.oas.sm.pojo.Department">  
+        <id column="DEPA_NUMBER" jdbcType="INTEGER" property="depaNumber" />
+		<result column="DEPA_NAME" jdbcType="VARCHAR" property="depaName" />
+		<result column="DEPA_FATHER_NUMBER" jdbcType="VARCHAR"
+			property="depaFatherNumber" />
+		<result column="DEPA_CHILD_NUMBER" jdbcType="VARCHAR" property="depaChildNumber" />
+		<result column="DEPA_LEVEL" jdbcType="VARCHAR" property="depaLevel" />
+		<result column="DEPA_EMAIL" jdbcType="VARCHAR" property="depaEmail" />
+		<result column="DEPA_COMMENT" jdbcType="VARCHAR" property="depaComment" />
+		<result column="DEPA_CREATE_NAME" jdbcType="VARCHAR" property="depaCreateName" />
+		<result column="DEPA_CREATE_DATETIME" jdbcType="TIMESTAMP"
+			property="depaCreateDatetime" />
+		<result column="DEPA_UPDATED_NAME" jdbcType="VARCHAR" property="depaUpdatedName" />
+		<result column="DEPA_UPDATED_DATETIME" jdbcType="TIMESTAMP"
+			property="depaUpdatedDatetime" /> 
+        <association property="account" javaType="com.clps.oas.sm.pojo.Account">  
+            <id column="account_id" jdbcType="INTEGER" property="accountId" />
+		<result column="account_name" jdbcType="VARCHAR" property="accountName" />
+		<result column="account_real_name" jdbcType="VARCHAR" property="accountRealName" />
+		<result column="account_pass" jdbcType="VARCHAR" property="accountPass" />
+		<result column="account_mail" jdbcType="VARCHAR" property="accountMail" />
+		<result column="account_province" jdbcType="VARCHAR" property="accountProvince" />
+		<result column="account_city" jdbcType="VARCHAR" property="accountCity" />
+		<result column="account_district" jdbcType="VARCHAR" property="accountDistrict" />
+		<result column="account_address" jdbcType="VARCHAR" property="accountAddress" />
+		<result column="account_phone" jdbcType="VARCHAR" property="accountPhone" />
+		<result column="account_telephone" jdbcType="VARCHAR" property="accountTelephone" />
+		<result column="account_role_id" jdbcType="INTEGER" property="accountRoleId" />
+		<result column="account_position_id" jdbcType="INTEGER"
+			property="accountPositionId" />
+		<result column="account_company_id" jdbcType="INTEGER"
+			property="accountCompanyId" />
+		<result column="account_created_datetime" jdbcType="TIMESTAMP"
+			property="accountCreatedDatetime" />
+		<result column="account_updated_datetime" jdbcType="TIMESTAMP"
+			property="accountUpdatedDatetime" />
+		<result column="account_isValid" jdbcType="BIT" property="accountIsvalid" />  
+        </association>  
+    </collection>  
+</resultMap> 
+	
+	
+	
+	
+	
+	
+	<sql id="Base_Column_List">
+		position_id, position_name, position_description, position_level,
+		position_department_id,
+		position_created_datetime, position_created_name, position_updated_datetime,
+		position_updated_name,
+		position_default1, position_default2
+	</sql>
+
+	<!-- Query Method -->
+	<!-- Query Position By Id -->
+	<select id="queryPositionById" parameterType="java.lang.Integer"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from position
+		where position_id = #{positionId,jdbcType=INTEGER}
+	</select>
+
+	<!-- Query Position By Name -->
+	<select id="queryPositionByName" parameterType="java.lang.String"
+		resultMap="PositionWithDeptWithAccountMap">
+		SELECT p.position_id, p.position_name, p.position_description, p.position_level,
+		p.position_department_id,
+		p.position_created_datetime, p.position_created_name, p.position_updated_datetime,
+		p.position_updated_name,d.DEPA_NUMBER, d.DEPA_NAME, d.DEPA_FATHER_NUMBER, d.DEPA_CHILD_NUMBER, d.DEPA_LEVEL, d.DEPA_EMAIL, 
+    d.DEPA_COMMENT, d.DEPA_CREATE_NAME, d.DEPA_CREATE_DATETIME, d.DEPA_UPDATED_NAME, d.DEPA_UPDATED_DATETIME, a.account_id, a.account_name, a.account_real_name, a.account_pass,
+		a.account_mail, 
+		a.account_address, account_phone, account_telephone,
+		a.account_role_id,
+		a.account_position_id,
+		a.account_company_id,
+		a.account_created_datetime,
+		a.account_updated_datetime
+		FROM
+		POSITION p,de_info_ta d,account a
+		WHERE p.position_department_id=d.DEPA_NUMBER AND p.position_created_name=a.account_id AND a.account_isValid=1 
+		AND position_name = #{positionName,jdbcType=VARCHAR}
+	</select>
+
+
+
+	<!-- Query all Positions -->
+	<select id="queryAllPositions" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from position
+		where position_isvalued = 1
+	</select>
+
+
+	<!-- Query all Department with Position -->
+	<select id="findAllDepartmentWithPosition" resultMap="PositionWithDeptWithAccountMap">
+		SELECT p.position_id, p.position_name, p.position_description, p.position_level,
+		p.position_department_id,
+		p.position_created_datetime, p.position_created_name, p.position_updated_datetime,
+		p.position_updated_name,d.DEPA_NUMBER, d.DEPA_NAME, d.DEPA_FATHER_NUMBER, d.DEPA_CHILD_NUMBER, d.DEPA_LEVEL, d.DEPA_EMAIL, 
+    d.DEPA_COMMENT, d.DEPA_CREATE_NAME, d.DEPA_CREATE_DATETIME, d.DEPA_UPDATED_NAME, d.DEPA_UPDATED_DATETIME, a.account_id, a.account_name, a.account_real_name, a.account_pass,
+		a.account_mail,
+		a.account_province,
+		a.account_city, account_district,
+		a.account_address, account_phone, account_telephone,
+		a.account_role_id,
+		a.account_position_id,
+		a.account_company_id,
+		a.account_created_datetime,
+		a.account_updated_datetime
+		FROM
+		POSITION p,de_info_ta d,account a
+		WHERE p.position_department_id=d.DEPA_NUMBER AND p.position_created_name=a.account_id AND a.account_isValid=1
+	</select>
+	
+	<!-- Query by paging #{toPage,jdbcType=INTEGER}-->
+	<select id="findByPaging" parameterType="com.clps.oas.util.paging.PagingVO" resultMap="PositionWithDeptWithAccountMap">
+		SELECT p.position_id, p.position_name, p.position_description, p.position_level,
+		p.position_department_id,
+		p.position_created_datetime, p.position_created_name, p.position_updated_datetime,
+		p.position_updated_name,d.DEPA_NUMBER, d.DEPA_NAME, d.DEPA_FATHER_NUMBER, d.DEPA_CHILD_NUMBER, d.DEPA_LEVEL, d.DEPA_EMAIL, 
+    d.DEPA_COMMENT, d.DEPA_CREATE_NAME, d.DEPA_CREATE_DATETIME, d.DEPA_UPDATED_NAME, d.DEPA_UPDATED_DATETIME, a.account_name
+		FROM
+		POSITION p,de_info_ta d,account a
+		WHERE p.position_department_id=d.DEPA_NUMBER 
+		AND p.position_created_name=a.account_id
+		AND p.position_isvalued = 1
+	    limit #{toPage}, #{pageSize}
+	</select>
+	
+	<!-- 职位总数 -->
+	<select id="countPositions" parameterType="com.clps.oas.sm.pojo.Position"
+		resultType="java.lang.Integer">
+		select count(position_id)
+		from position
+		where position_isvalued = 1
+	</select>
+	<!-- Insert Method -->
+	<insert id="insertPosition" parameterType="com.clps.oas.sm.pojo.Position">
+		<selectKey keyProperty="positionId" order="BEFORE"
+			resultType="java.lang.Integer">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into position
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			position_id,
+			<if test="positionName != null">
+				position_name,
+			</if>
+			<if test="positionDescription != null">
+				position_description,
+			</if>
+			<if test="positionLevel != null">
+				position_level,
+			</if>
+			<if test="positionDepartmentId != null">
+				position_department_id,
+			</if>
+			<if test="positionCreatedDatetime != null">
+				position_created_datetime,
+			</if>
+			<if test="positionCreatedName != null">
+				position_created_name,
+			</if>
+			<if test="positionUpdatedDatetime != null">
+				position_updated_datetime,
+			</if>
+			<if test="positionUpdatedName != null">
+				position_updated_name,
+			</if>
+			<if test="positionDefault1 != null">
+				position_default1,
+			</if>
+			<if test="positionDefault2 != null">
+				position_default2,
+			</if>
+			position_isvalued,
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			#{positionId,jdbcType=INTEGER},
+			<if test="positionName != null">
+				#{positionName,jdbcType=VARCHAR},
+			</if>
+			<if test="positionDescription != null">
+				#{positionDescription,jdbcType=VARCHAR},
+			</if>
+			<if test="positionLevel != null">
+				#{positionLevel,jdbcType=VARCHAR},
+			</if>
+			<if test="positionDepartmentId != null">
+				#{positionDepartmentId,jdbcType=INTEGER},
+			</if>
+			<if test="positionCreatedDatetime != null">
+				#{positionCreatedDatetime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="positionCreatedName != null">
+				#{positionCreatedName,jdbcType=INTEGER},
+			</if>
+			<if test="positionUpdatedDatetime != null">
+				#{positionUpdatedDatetime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="positionUpdatedName != null">
+				#{positionUpdatedName,jdbcType=INTEGER},
+			</if>
+			<if test="positionDefault1 != null">
+				#{positionDefault1,jdbcType=VARCHAR},
+			</if>
+			<if test="positionDefault2 != null">
+				#{positionDefault2,jdbcType=VARCHAR},
+			</if>
+			1,
+		</trim>
+	</insert>
+
+	<!-- LogicDelete Method -->
+	<update id="deletePositionById" parameterType="com.clps.oas.sm.pojo.Position">
+		update position
+		<set>
+			position_isvalued = -1,
+		</set>
+		where position_id = #{positionId,jdbcType=INTEGER}
+	</update>
+
+	<!-- Update Method -->
+	<update id="updatePosition" parameterType="com.clps.oas.sm.pojo.Position">
+		update position
+		<set>
+			<if test="positionName != null">
+				position_name = #{positionName,jdbcType=VARCHAR},
+			</if>
+			<if test="positionDescription != null">
+				position_description = #{positionDescription,jdbcType=VARCHAR},
+			</if>
+			<if test="positionLevel != null">
+				position_level = #{positionLevel,jdbcType=VARCHAR},
+			</if>
+			<if test="positionDepartmentId != null">
+				position_department_id = #{positionDepartmentId,jdbcType=INTEGER},
+			</if>
+			<if test="positionCreatedDatetime != null">
+				position_created_datetime = #{positionCreatedDatetime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="positionCreatedName != null">
+				position_created_name = #{positionCreatedName,jdbcType=INTEGER},
+			</if>
+			<if test="positionUpdatedDatetime != null">
+				position_updated_datetime = #{positionUpdatedDatetime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="positionUpdatedName != null">
+				position_updated_name = #{positionUpdatedName,jdbcType=INTEGER},
+			</if>
+			<if test="positionDefault1 != null">
+				position_default1 = #{positionDefault1,jdbcType=VARCHAR},
+			</if>
+			<if test="positionDefault2 != null">
+				position_default2 = #{positionDefault2,jdbcType=VARCHAR}
+			</if>
+		</set>
+		where position_id = #{positionId,jdbcType=INTEGER}
+	</update>
+</mapper>

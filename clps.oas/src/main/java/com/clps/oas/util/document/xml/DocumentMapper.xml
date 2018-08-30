@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.clps.oas.util.document.dao.DocumentMapper">
+	<resultMap id="BaseResultMap" type="com.clps.oas.util.document.pojo.Document">
+		<id column="document_id" jdbcType="INTEGER" property="documentId" />
+		<result column="document_title" jdbcType="VARCHAR" property="documentTitle" />
+		<result column="document_name" jdbcType="VARCHAR" property="documentName" />
+		<result column="document_comment" jdbcType="VARCHAR" property="documentComment" />
+		<result column="document_created_datetime" jdbcType="TIMESTAMP"
+			property="documentCreatedDatetime" />
+		<result column="document_created_name" jdbcType="VARCHAR"
+			property="documentCreatedName" />
+		<result column="document_updated_datetime" jdbcType="TIMESTAMP"
+			property="documentUpdatedDatetime" />
+		<result column="document_updated_name" jdbcType="VARCHAR"
+			property="documentUpdatedName" />
+		<result column="document_isValid" jdbcType="BIT" property="documentIsvalid" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		document_id, document_title, document_name,
+		document_comment,
+		document_created_datetime,
+		document_created_name,
+		document_updated_datetime, document_updated_name, document_isValid
+	</sql>
+
+	<!-- 查询所有文件信息 -->
+	<select id="queryAllDocuments" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from util_document
+		where
+		document_isValid = 1
+	</select>
+
+	<!-- 分页查找所有文件信息 -->
+	<select id="queryAllDocumentsByPaging" resultMap="BaseResultMap"
+		resultType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from util_document
+		where
+		document_isValid = 1
+		limit #{toPage},
+		#{pageSize}
+	</select>
+
+	<!-- 文件总数 -->
+	<select id="countDocuments"  parameterType="com.clps.oas.util.document.pojo.Document"
+		resultType="java.lang.Integer">
+		select count(document_id)
+		from util_document
+		where
+		document_isValid = 1
+	</select>
+
+
+	<!-- 模糊查询 通过文件标题模糊查找document对象 -->
+	<select id="queryDocumentLikeTitle" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		<bind name="pattern" value="'%'+_parameter.getDocumentTitle()+'%'" />
+		select
+		<include refid="Base_Column_List" />
+		from util_document
+		where document_title like #{pattern} and
+		document_isValid = 1
+	</select>
+
+	<!-- 新增文件 -->
+	<insert id="addDocument" parameterType="com.clps.oas.util.document.pojo.Document">
+		<selectKey keyProperty="documentId" order="BEFORE"
+			resultType="java.lang.Integer">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into util_document (document_id, document_title, document_name,
+		document_comment, document_created_datetime,
+		document_created_name,
+		document_updated_datetime,
+		document_updated_name, document_isValid)
+		values (#{documentId,jdbcType=INTEGER},
+		#{documentTitle,jdbcType=VARCHAR},
+		#{documentName,jdbcType=VARCHAR},
+		#{documentComment,jdbcType=VARCHAR},
+		#{documentCreatedDatetime,jdbcType=TIMESTAMP},
+		#{documentCreatedName,jdbcType=VARCHAR},
+		#{documentUpdatedDatetime,jdbcType=TIMESTAMP},
+		#{documentUpdatedName,jdbcType=VARCHAR},
+		#{documentIsvalid,jdbcType=BIT})
+	</insert>
+
+	<!-- 通过id查找文件 -->
+	<select id="queryDocumentById" parameterType="java.lang.Integer"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from util_document
+		where document_isValid = 1 and document_id =
+		#{documentId,jdbcType=INTEGER}
+	</select>
+
+	<!-- 逻辑删除文件 -->
+	<update id="deleteDocumentById" parameterType="com.clps.oas.util.document.pojo.Document">
+		update
+		util_document
+		set
+		document_isValid = 0
+		where document_id =
+		#{documentId,jdbcType=INTEGER}
+	</update>
+
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from
+		util_document
+		where document_id = #{documentId,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.clps.oas.util.document.pojo.Document">
+		<selectKey keyProperty="documentId" order="BEFORE"
+			resultType="java.lang.Integer">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into util_document (document_id, document_title, document_name,
+		document_comment, document_created_datetime,
+		document_created_name,
+		document_updated_datetime,
+		document_updated_name, document_isValid)
+		values (#{documentId,jdbcType=INTEGER},
+		#{documentTitle,jdbcType=VARCHAR},
+		#{documentName,jdbcType=VARCHAR},
+		#{documentComment,jdbcType=VARCHAR},
+		#{documentCreatedDatetime,jdbcType=TIMESTAMP},
+		#{documentCreatedName,jdbcType=VARCHAR},
+		#{documentUpdatedDatetime,jdbcType=TIMESTAMP},
+		#{documentUpdatedName,jdbcType=VARCHAR},
+		#{documentIsvalid,jdbcType=BIT})
+	</insert>
+	<insert id="insertSelective" parameterType="com.clps.oas.util.document.pojo.Document">
+		<selectKey keyProperty="documentId" order="BEFORE"
+			resultType="java.lang.Integer">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into util_document
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			document_id,
+			<if test="documentTitle != null">
+				document_title,
+			</if>
+			<if test="documentName != null">
+				document_name,
+			</if>
+			<if test="documentComment != null">
+				document_comment,
+			</if>
+			<if test="documentCreatedDatetime != null">
+				document_created_datetime,
+			</if>
+			<if test="documentCreatedName != null">
+				document_created_name,
+			</if>
+			<if test="documentUpdatedDatetime != null">
+				document_updated_datetime,
+			</if>
+			<if test="documentUpdatedName != null">
+				document_updated_name,
+			</if>
+			<if test="documentIsvalid != null">
+				document_isValid,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			#{documentId,jdbcType=INTEGER},
+			<if test="documentTitle != null">
+				#{documentTitle,jdbcType=VARCHAR},
+			</if>
+			<if test="documentName != null">
+				#{documentName,jdbcType=VARCHAR},
+			</if>
+			<if test="documentComment != null">
+				#{documentComment,jdbcType=VARCHAR},
+			</if>
+			<if test="documentCreatedDatetime != null">
+				#{documentCreatedDatetime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="documentCreatedName != null">
+				#{documentCreatedName,jdbcType=VARCHAR},
+			</if>
+			<if test="documentUpdatedDatetime != null">
+				#{documentUpdatedDatetime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="documentUpdatedName != null">
+				#{documentUpdatedName,jdbcType=VARCHAR},
+			</if>
+			<if test="documentIsvalid != null">
+				#{documentIsvalid,jdbcType=BIT},
+			</if>
+		</trim>
+	</insert>
+
+	<!-- 更新文件信息 -->
+	<update id="updateDocument" parameterType="com.clps.oas.util.document.pojo.Document">
+		update util_document
+		<set>
+			<if test="documentTitle != null">
+				document_title = #{documentTitle,jdbcType=VARCHAR},
+			</if>
+			<if test="documentName != null">
+				document_name = #{documentName,jdbcType=VARCHAR},
+			</if>
+			<if test="documentComment != null">
+				document_comment = #{documentComment,jdbcType=VARCHAR},
+			</if>
+			<if test="documentCreatedDatetime != null">
+				document_created_datetime =
+				#{documentCreatedDatetime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="documentCreatedName != null">
+				document_created_name =
+				#{documentCreatedName,jdbcType=VARCHAR},
+			</if>
+			<if test="documentUpdatedDatetime != null">
+				document_updated_datetime =
+				#{documentUpdatedDatetime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="documentUpdatedName != null">
+				document_updated_name =
+				#{documentUpdatedName,jdbcType=VARCHAR},
+			</if>
+			<if test="documentIsvalid != null">
+				document_isValid = #{documentIsvalid,jdbcType=BIT},
+			</if>
+		</set>
+		where document_id = #{documentId,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.clps.oas.util.document.pojo.Document">
+		update
+		util_document
+		set document_title = #{documentTitle,jdbcType=VARCHAR},
+		document_name = #{documentName,jdbcType=VARCHAR},
+		document_comment =
+		#{documentComment,jdbcType=VARCHAR},
+		document_created_datetime =
+		#{documentCreatedDatetime,jdbcType=TIMESTAMP},
+		document_created_name =
+		#{documentCreatedName,jdbcType=VARCHAR},
+		document_updated_datetime =
+		#{documentUpdatedDatetime,jdbcType=TIMESTAMP},
+		document_updated_name =
+		#{documentUpdatedName,jdbcType=VARCHAR},
+		document_isValid =
+		#{documentIsvalid,jdbcType=BIT}
+		where document_id =
+		#{documentId,jdbcType=INTEGER}
+	</update>
+</mapper>
